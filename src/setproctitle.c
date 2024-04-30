@@ -84,6 +84,8 @@ static inline size_t spt_min(size_t a, size_t b) {
  * For discussion on the portability of the various methods, see
  * http://lists.freebsd.org/pipermail/freebsd-stable/2008-June/043136.html
  */
+
+// 如果是glic, 调用 clearenv() 函数, 否则分配一个空的二位数组
 int spt_clearenv(void) {
 #ifdef HAVE_CLEARENV
 	return clearenv();
@@ -109,6 +111,7 @@ static int spt_copyenv(int envc, char *oldenv[]) {
 	int i, error;
 	int envsize;
 
+	// 验证是否已经已经拷贝过env
 	if (environ != oldenv)
 		return 0;
 
